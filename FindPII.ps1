@@ -17,7 +17,7 @@ $attach = "$Folder\$env:COMPUTERNAME.csv"
 
 New-Item -Path $Folder -ItemType Directory
 
-Get-ChildItem -Path 'C:\Users\' -Recurse | Select-String -Pattern $SSN,$Amex,$MC,$Visa,$Din,$Disc,$JCB `
+Get-ChildItem -Path 'C:\Users\' -Recurse | Select-String -Pattern ($SSN -or $Amex -or $MC -or $Visa -or $Din -or $Disc -or $JCB) `
 | Select-Object $env:COMPUTERNAME,path | Export-Csv $Folder\$env:COMPUTERNAME.csv
 
 Send-MailMessage -SmtpServer $smtp -Port $port -To $to -From $from -Subject $subject -Attachments $attach
