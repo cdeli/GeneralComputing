@@ -6,6 +6,8 @@ $Din = "^3(?:0[0-5]|[68][0-9])[0-9]{11}$"
 $Disc = "^6(?:011|5[0-9]{2})[0-9]{12}$"
 $JCB = "^(?:2131|1800|35\d{3})\d{11}$"
 
+$pattern = "$Amex|$Din|$Disc|$JCB|$MC|$SSN|$Visa"
+
 $Folder = "C:\PII"
 
 $smtp = "mail.contoso.com"
@@ -17,8 +19,7 @@ $attach = "$Folder\$env:COMPUTERNAME.csv"
 
 New-Item -Path $Folder -ItemType Directory
 
-Get-ChildItem -Path 'C:\Users\' -Recurse | Select-String -Pattern ($SSN -or $Amex -or $MC -or $Visa -or $Din -or $Disc -or $JCB) `
-| Select-Object $env:COMPUTERNAME,path | Export-Csv $Folder\$env:COMPUTERNAME.csv
+Get-ChildItem -Path 'C:\Users\' -Recurse | Where-Object {$_ -match $pattern} | Select-Object $env:COMPUTERNAME,path | Export-Csv $Folder\$env:COMPUTERNAME.csv
 
 Send-MailMessage -SmtpServer $smtp -Port $port -To $to -From $from -Subject $subject -Attachments $attach
 
