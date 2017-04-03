@@ -19,7 +19,10 @@ $attach = "$Folder\$env:COMPUTERNAME.csv"
 
 New-Item -Path $Folder -ItemType Directory
 
-Get-ChildItem -Path 'C:\Users\' -Recurse | Where-Object {$_ -match $pattern} | Select-Object $env:COMPUTERNAME,path | Export-Csv $Folder\$env:COMPUTERNAME.csv
+Get-ChildItem -Path 'C:\Users\' -Recurse | 
+    Where-Object {$_ -match $pattern} | 
+    Select-Object $env:COMPUTERNAME,path | 
+    Export-Csv $Folder\$env:COMPUTERNAME.csv
 
 Send-MailMessage -SmtpServer $smtp -Port $port -To $to -From $from -Subject $subject -Attachments $attach
 
