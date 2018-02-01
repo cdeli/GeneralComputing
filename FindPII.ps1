@@ -20,7 +20,6 @@ $attach = "$Folder\$env:COMPUTERNAME.csv"
 New-Item -Path $Folder -ItemType Directory
 
 Get-ChildItem -Path 'C:\Users\' -Recurse | 
-<<<<<<< HEAD
     Where-Object {( ($_| Select-String -Pattern ($SSN) -SimpleMatch) -or
         ($_| Select-String -Pattern ($Visa) -SimpleMatch) -or
         ($_| Select-String -Pattern ($MC) -SimpleMatch) -or
@@ -31,10 +30,8 @@ Get-ChildItem -Path 'C:\Users\' -Recurse |
         
 # $visa -or $MC -or $Amex -or $Din -or $Disc -or $JCB)
 #Send-MailMessage -SmtpServer $smtp -Port $port -To $to -From $from -Subject $subject -Attachments $attach 
-=======
     Where-Object {$_ -match $pattern} | 
     Select-Object $env:COMPUTERNAME,path | 
     Export-Csv $Folder\$env:COMPUTERNAME.csv
->>>>>>> origin/master
 
 #Remove-Item -Path $Folder -Recurse -Force
